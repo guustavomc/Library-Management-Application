@@ -8,9 +8,12 @@ class Inventory:
         new_Book.price=price
 
         self.books.append(new_Book)
-
+ 
         return new_Book
     
     def display_books(self):
         for book in self.books:
             print(book)
+
+    def current_book_quantity(self):
+        return len(self.books)

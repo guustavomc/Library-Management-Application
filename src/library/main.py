@@ -7,3 +7,4 @@ if __name__ == "__main__":
     inventory.register_book("THE HOBBIT", "J R R TOLKIEN", 500, 30)
 
     inventory.display_books()
+    print("Current book quantity available:", inventory.current_book_quantity())
