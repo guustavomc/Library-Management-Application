@@ -1,4 +1,6 @@
 from models.inventory import Inventory
+from models.customer import Customer
+
 
 if __name__ == "__main__":
     
@@ -7,4 +9,12 @@ if __name__ == "__main__":
     inventory.register_book("THE HOBBIT", "J R R TOLKIEN", 500, 30)
 
     inventory.display_books()
-    print("Current book quantity available:", inventory.current_book_quantity())
+
+    inventory.available_books()
+
+    customer=Customer("cliente 1", 10)
+    inventory.lend_book("LORD OF THE RINGS", customer)
+
+    inventory.available_books()
+
+
