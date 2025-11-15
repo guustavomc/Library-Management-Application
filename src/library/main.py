@@ -15,6 +15,4 @@ if __name__ == "__main__":
     customer=Customer("cliente 1", 10)
     inventory.lend_book("LORD OF THE RINGS", customer)
 
-    inventory.available_books()
-
-
+    inventory.display_books()

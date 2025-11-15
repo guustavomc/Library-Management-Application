@@ -44,13 +44,13 @@ class Book:
     def borrow(self, person):
         if not self._available:
             return False
-        self_available = False
+        self._available = False
         self._borrowed_by = person
         return True
     
     def return_book(self):
         if self._available:
             return False
-        self_available = True
+        self._available = True
         self._borrowed_by = None
         return True
