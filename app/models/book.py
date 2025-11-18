@@ -1,6 +1,8 @@
+import uuid
 
 class Book:
     def __init__(self, name, author, pages):
+        self.id = str(uuid.uuid4())[:8]  # Simple ID
         self._name= name.title()
         self._author=author.title()
         self._pages=pages
