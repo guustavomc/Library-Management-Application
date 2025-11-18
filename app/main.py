@@ -17,3 +17,8 @@ def get_books(available: bool = None):
     if available is not None:
         books = [b for b in books if b.is_available == available]
     return books
+
+@app.post("/books/",response_model=BookResponse)
+def create_book(book: BookCreate):
+    new_book = inventory.register_book(book.name, book.author, book.pages, book.price)
+    return new_book
