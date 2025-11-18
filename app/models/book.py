@@ -20,6 +20,18 @@ class Book:
         return f'{self._name} | {self._author} | {self._pages} | {self._price} | {status}'
 
     @property
+    def name(self):
+        return self._name
+    
+    @property
+    def author(self):
+        return self._author
+    
+    @property
+    def pages(self):
+        return self._pages
+
+    @property
     def price(self):
         return self._price
     

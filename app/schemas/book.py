@@ -12,7 +12,7 @@ class BookCreate(BookBase):
     pass
 
 class BookResponse(BookBase):
-    id: int
+    id: str
     book_edition: int
     is_available: bool
     borrowed_by: Optional[str] = None
