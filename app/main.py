@@ -1,18 +1,19 @@
+from fastapi import FastAPI, HTTPException
 from models.inventory import Inventory
 from models.customer import Customer
+from schemas.book import BookCreate, BookResponse
+from typing import List
 
+app = FastAPI(title="Library API")
 
-if __name__ == "__main__":
-    
-    inventory=Inventory()
-    inventory.register_book("LORD OF THE RINGS", "J R R TOLKIEN", 1000, 50)
-    inventory.register_book("THE HOBBIT", "J R R TOLKIEN", 500, 30)
+inventory = Inventory()
 
-    inventory.display_books()
+inventory.register_book("LORD OF THE RINGS", "J R R TOLKIEN", 1000, 50)
+inventory.register_book("THE HOBBIT", "J R R TOLKIEN", 500, 30)
 
-    inventory.available_books()
-
-    customer=Customer("cliente 1", 10)
-    inventory.lend_book("LORD OF THE RINGS", customer)
-
-    inventory.display_books()
+@app.get("/books/", response_model=List[BookResponse])
+def get_books(available: bool = None):
+    books = inventory.books
+    if available is not None:
+        books = [b for b in books if b.is_available == available]
+    return books
