@@ -1,6 +1,8 @@
+import uuid
 
 class Book:
     def __init__(self, name, author, pages):
+        self.id = str(uuid.uuid4())[:8]  # Simple ID
         self._name= name.title()
         self._author=author.title()
         self._pages=pages
@@ -16,6 +18,19 @@ class Book:
         else:
             status="Not Available"
         return f'{self._name} | {self._author} | {self._pages} | {self._price} | {status}'
+    
+
+    @property
+    def name(self):
+        return self._name
+    
+    @property
+    def author(self):
+        return self._author
+    
+    @property
+    def pages(self):
+        return self._pages
 
     @property
     def price(self):

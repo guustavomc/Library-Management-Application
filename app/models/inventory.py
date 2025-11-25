@@ -3,17 +3,17 @@ class Inventory:
     def __init__(self):
         self.books = []
 
-    def register_book(self, name, author, pages, price):
-        new_Book=Book(name, author, pages)
-        new_Book.price=price
-
-        self.books.append(new_Book)
- 
-        return new_Book
+    def register_book(self, name, author, pages, price, book_edition):
+        new_book=Book(name, author, pages)
+        new_book.price=price
+        new_book.book_edition=book_edition
+        self.books.append(new_book)
+        return new_book
     
     def display_books(self):
         for book in self.books:
-            print(book)
+            borrowed = book.borrowed_by._name if book.borrowed_by else None
+            print(f"{book.id} | {book}")
 
     def current_book_quantity(self):
         return len(self.books)
