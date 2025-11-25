@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, status
 from models.inventory import Inventory
 from models.customer import Customer
 from schemas.book import BookCreate, BookResponse
@@ -8,8 +8,8 @@ app = FastAPI(title="Library API")
 
 inventory = Inventory()
 
-inventory.register_book("LORD OF THE RINGS", "J R R TOLKIEN", 1000, 50)
-inventory.register_book("THE HOBBIT", "J R R TOLKIEN", 500, 30)
+inventory.register_book("LORD OF THE RINGS", "J R R TOLKIEN", 1000, 50,1)
+inventory.register_book("THE HOBBIT", "J R R TOLKIEN", 500, 30, 2)
 
 @app.get("/books/", response_model=List[BookResponse])
 def get_books(available: bool = None):
@@ -20,7 +20,7 @@ def get_books(available: bool = None):
 
 @app.post("/books/",response_model=BookResponse)
 def create_book(book: BookCreate):
-    new_book = inventory.register_book(book.name, book.author, book.pages, book.price)
+    new_book = inventory.register_book(book.name, book.author, book.pages, book.price, book.book_edition)
     return new_book
 
 @app.put("/books/{book_id}",response_model=BookResponse)
@@ -33,3 +33,10 @@ def update_book(book_id: str, book_update: BookCreate):
             book._price = book_update.price
             book._book_edition = book_update.book_edition
             return book
+
+@app.delete("/books/{book_id}", status_code= status.HTTP_204_NO_CONTENT)
+def delete_book(book_id: str):
+    for i, book in enumerate(inventory.books):
+        if book.id == book_id:
+            inventory.books.pop(i)
+            return

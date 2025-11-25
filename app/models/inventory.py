@@ -3,9 +3,10 @@ class Inventory:
     def __init__(self):
         self.books = []
 
-    def register_book(self, name, author, pages, price):
+    def register_book(self, name, author, pages, price, book_edition):
         new_book=Book(name, author, pages)
         new_book.price=price
+        new_book.book_edition=book_edition
         self.books.append(new_book)
         return new_book
     
