@@ -18,6 +18,13 @@ def get_books(available: bool = None):
         books = [b for b in books if b.is_available == available]
     return books
 
+@app.get("/books/{book_id}", response_model=BookResponse)
+def get_book_with_id(book_id: str):
+    books = inventory.books
+    for book in books:
+        if book.id == book_id:
+            return book
+
 @app.post("/books/",response_model=BookResponse)
 def create_book(book: BookCreate):
     new_book = inventory.register_book(book.name, book.author, book.pages, book.price, book.book_edition)
