@@ -18,6 +18,7 @@ class Book:
         else:
             status="Not Available"
         return f'{self._name} | {self._author} | {self._pages} | {self._price} | {status}'
+    
 
     @property
     def name(self):

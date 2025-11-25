@@ -22,3 +22,14 @@ def get_books(available: bool = None):
 def create_book(book: BookCreate):
     new_book = inventory.register_book(book.name, book.author, book.pages, book.price)
     return new_book
+
+@app.put("/books/{book_id}",response_model=BookResponse)
+def update_book(book_id: str, book_update: BookCreate):
+    for book in inventory.books:
+        if book.id == book_id:
+            book._name = book_update.name.title()
+            book._author = book_update.author.title()
+            book._pages = book_update.pages
+            book._price = book_update.price
+            book._book_edition = book_update.book_edition
+            return book
