@@ -47,3 +47,13 @@ def delete_book(book_id: str):
         if book.id == book_id:
             inventory.books.pop(i)
             return
+
+@app.post("/books/{book_id}/borrow", response_model=BookResponse)
+def borrow_book (book_id: str, customer_name: str, customer_id: int):
+     customer = Customer(customer_name, customer_id)
+     for book in inventory.books:
+        if book.id == book_id:
+            if inventory.lend_book(book._name, customer):
+                return book
+            raise HTTPException(status_code=400, detail="Book is already lent")
+     raise HTTPException(status_code=404, detail="Book not found")
