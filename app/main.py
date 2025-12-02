@@ -56,4 +56,13 @@ def borrow_book (book_id: str, customer_name: str, customer_id: int):
             if inventory.lend_book(book._name, customer):
                 return book
             raise HTTPException(status_code=400, detail="Book is already lent")
-     raise HTTPException(status_code=404, detail="Book not found")
+        raise HTTPException(status_code=404, detail="Book not found")
+
+@app.post("/books/{book_id}/return", response_model=BookResponse)
+def return_book(book_id:str):
+    for book in inventory.books:
+        if book.id == book_id:
+            if inventory.return_book(book._name):
+                return book
+            raise HTTPException(status_code=400, detail="Book was already available")
+        raise HTTPException(status_code=404, detail="Book not found")
