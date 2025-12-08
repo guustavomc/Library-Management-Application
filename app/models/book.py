@@ -56,11 +56,11 @@ class Book:
     def book_edition(self, value):
         self._book_edition = value
 
-    def borrow(self, person):
+    def borrow(self, customer):
         if not self._available:
             return False
         self._available = False
-        self._borrowed_by = person
+        self._borrowed_by = customer
         return True
     
     def return_book(self):

@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, status
 from models.inventory import Inventory
 from models.customer import Customer
-from schemas.book import BookCreate, BookResponse
+from schemas.book import BookCreate, BookResponse, BorrowBookRequest
 from typing import List
 
 app = FastAPI(title="Library API")
@@ -49,8 +49,8 @@ def delete_book(book_id: str):
             return
 
 @app.post("/books/{book_id}/borrow", response_model=BookResponse)
-def borrow_book (book_id: str, customer_name: str, customer_id: int):
-     customer = Customer(customer_name, customer_id)
+def borrow_book (book_id: str, request: BorrowBookRequest):
+     customer = Customer(request.customer_name, request.customer_id)
      for book in inventory.books:
         if book.id == book_id:
             if inventory.lend_book(book._name, customer):
