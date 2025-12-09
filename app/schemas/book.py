@@ -1,5 +1,5 @@
 # schemas/book.py
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict, field_serializer
 from typing import Optional
 
 class BookBase(BaseModel):
@@ -18,5 +18,9 @@ class BookResponse(BookBase):
     is_available: bool
     borrowed_by: Optional[str] = None
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
+ 
+
+class BorrowBookRequest(BaseModel):
+    customer_name: str
+    customer_id: int

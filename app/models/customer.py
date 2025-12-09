@@ -7,3 +7,11 @@ class Customer:
 
     def __str__(self):
         return f'Customer ID: {self._customer_id} | Name: {self._name}'
+    
+    @property
+    def name(self):
+        return self._name
+    
+    @property
+    def customer_id(self):
+        return self._customer_id
