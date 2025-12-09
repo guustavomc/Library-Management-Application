@@ -50,19 +50,28 @@ def delete_book(book_id: str):
 
 @app.post("/books/{book_id}/borrow", response_model=BookResponse)
 def borrow_book (book_id: str, request: BorrowBookRequest):
-     customer = Customer(request.customer_name, request.customer_id)
-     for book in inventory.books:
-        if book.id == book_id:
-            if inventory.lend_book(book._name, customer):
-                return book
-            raise HTTPException(status_code=400, detail="Book is already lent")
+    customer = Customer(request.customer_name, request.customer_id)
+    if inventory.lend_book_by_id(book_id, customer):
+        book=inventory.get_book_by_id(book_id)
+        return book
+
+    book = inventory.get_book_by_id(book_id)
+    if not book:
         raise HTTPException(status_code=404, detail="Book not found")
+    if not book.is_available:
+        raise HTTPException(status_code=400, detail="Book is already lent")
+    
 
 @app.post("/books/{book_id}/return", response_model=BookResponse)
 def return_book(book_id:str):
-    for book in inventory.books:
-        if book.id == book_id:
-            if inventory.return_book(book._name):
-                return book
-            raise HTTPException(status_code=400, detail="Book was already available")
+    if inventory.return_book_by_id(book_id):
+        book=inventory.get_book_by_id(book_id)
+        return book
+
+    book = inventory.get_book_by_id(book_id)
+    if not book:
         raise HTTPException(status_code=404, detail="Book not found")
+    if book.is_available:
+        raise HTTPException(status_code=400, detail="Book was not borrowed / already available")
+    
+
