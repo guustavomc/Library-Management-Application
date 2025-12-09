@@ -1,3 +1,4 @@
+from typing import Optional
 from .book import Book
 class Inventory:
     def __init__(self):
@@ -23,32 +24,36 @@ class Inventory:
         for book in self.books:
             if book.is_available:
                 print(book)
-    
-    def return_book(self, book_title):
-        book_title= book_title.title()
-        for book in self.books:
-            if book._name == book_title:
-                if book.return_book():
-                    print(f"Book '{book._name}' was returned successfully")
-                    return True
-                else:
-                    print(f"Book '{book._name}' was already available")
-                    return False
 
-            else:
-                print(f"Failed to locate '{book._name}' on inventory")
-                return False
-    
-    def lend_book(self, book_title, customer):
-        book_title= book_title.title()
+    def get_book_by_id(self, book_id) -> Optional[Book]:
         for book in self.books:
-            if book._name==book_title:
-                if book.borrow(customer):
-                    print(f"Book '{book._name}' was lended to '{customer}'")
-                    return True
-                else:
-                    print(f"Book '{book._name}' is already lended'")
-                    return False
-            else:
-                print(f"Failed to locate '{book._name}' on inventory")
-                return False
+            if book.id == book_id:
+                return book
+        return None
+    
+    def return_book_by_id(self, book_id):
+        book = self.get_book_by_id(book_id)
+
+        if not book:
+            return False
+        if book.is_available:
+            return False
+        book.return_book()
+        print(f"Book '{book._name}' was returned successfully")
+        return True
+
+        
+    
+    def lend_book_by_id(self, book_id, customer):
+        book = self.get_book_by_id(book_id)
+
+        if not book:
+            return False
+        if not book.is_available:
+            return False
+        book.borrow(customer)
+        print(f"Book '{book._name}' was lended to '{customer}'")        
+        return True
+
+
+        
