@@ -9,7 +9,7 @@ app = FastAPI(title="Library API")
 inventory = Inventory()
 
 inventory.register_book("LORD OF THE RINGS", "J R R TOLKIEN", 1000, 50,1)
-inventory.register_book("THE HOBBIT", "J R R TOLKIEN", 500, 30, 2)
+inventory.register_book("THE HOBBIT", "J R R TOLKIEN", 600, 30, 2)
 
 @app.get("/books/", response_model=List[BookResponse])
 def get_books(available: bool = None):
