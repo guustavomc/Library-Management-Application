@@ -18,12 +18,6 @@ class BookResponse(BookBase):
     is_available: bool
     borrowed_by: Optional[str] = None
 
-    @field_serializer('borrowed_by')
-    def serialize_borrowed_by(self, value):
-        if value is None:
-            return None
-        return f'Customer ID: {value.customer_id} | Name: {value.name}'
-    
     model_config = ConfigDict(from_attributes=True)
  
 

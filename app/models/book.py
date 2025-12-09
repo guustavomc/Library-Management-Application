@@ -8,8 +8,8 @@ class Book:
         self._pages=pages
         self._price=0
         self._book_edition=0
-        self._available=True
-        self._borrowed_by=None
+        self.is_available=True
+        self.borrowed_by=None
 
     def __str__(self):
         status=""
@@ -44,28 +44,20 @@ class Book:
     def book_edition(self):
         return self._book_edition
     
-    @property
-    def is_available(self):
-        return self._available
-    
-    @property
-    def borrowed_by(self):
-        return self._borrowed_by
-    
     @book_edition.setter
     def book_edition(self, value):
         self._book_edition = value
 
     def borrow(self, customer):
-        if not self._available:
+        if not self.is_available:
             return False
-        self._available = False
-        self._borrowed_by = customer
+        self.is_available = False
+        self.borrowed_by = f"Customer ID: {customer.customer_id} | Name: {customer.name}"
         return True
     
     def return_book(self):
-        if self._available:
+        if self.is_available:
             return False
-        self._available = True
-        self._borrowed_by = None
+        self.is_available = True
+        self.borrowed_by = None
         return True
