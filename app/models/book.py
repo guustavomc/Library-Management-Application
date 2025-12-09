@@ -44,13 +44,6 @@ class Book:
     def book_edition(self):
         return self._book_edition
     
-    @property
-    def is_available(self):
-        return self.is_available
-    
-    @property
-    def borrowed_by(self):
-        return self.borrowed_by
     
     @book_edition.setter
     def book_edition(self, value):

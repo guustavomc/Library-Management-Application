@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, status
 from models.inventory import Inventory
 from models.customer import Customer
-from schemas.book import BookCreate, BookResponse
+from schemas.book import BookCreate, BookResponse, BorrowBookRequest
 from typing import List
 
 app = FastAPI(title="Library API")
