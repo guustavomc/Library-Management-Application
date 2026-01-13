@@ -52,7 +52,7 @@ class Book:
         if not self.is_available:
             return False
         self.is_available = False
-        self.borrowed_by = f"Customer ID: {customer.customer_id} | Name: {customer.name}"
+        self.borrowed_by = customer.customer_id
         return True
     
     def return_book(self):
@@ -61,3 +61,32 @@ class Book:
         self.is_available = True
         self.borrowed_by = None
         return True
+    
+    def to_dict(cls):
+        return {
+            "id": self.id,
+            "name": self._name,
+            "author": self._author,
+            "pages": self._pages,
+            "price": self._price,
+            "book_edition": self._book_edition,
+            "is_available": self._is_available,
+            "borrowed_by": self._borrowed_by
+        }
+    
+    @classmethod
+    def from_dict(cls, data):
+        book = cls(data["name"],data["author"],data["pages"])
+        book.id = data["id"]
+        book._price = data["price"]
+        book._book_edition = data["book_edition"]
+        book.is_available = data["is_available"]
+        book.borrowed_by = data["borrowed_by"]
+        return book
+    
+    def __str__(self):
+        status = "Available" if self.is_available else "Not Available"
+        borrowed = f"Borrowed by ID: {self.borrowed_by}" if self.borrowed_by else "None"
+        return f'{self._name} | {self._author} | {self._pages} | {self._price} | {status} | {borrowed}'
+
+
