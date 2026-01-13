@@ -13,12 +13,11 @@ class Book:
 
     def __str__(self):
         status=""
-        if(self._available):
+        if(self.is_available):
             status="Available"
         else:
             status="Not Available"
-        return f'{self._name} | {self._author} | {self._pages} | {self._price} | {status}'
-    
+        return f'{self._name} by {self._author} ({self._pages} pages, ${self._price}, Edition {self._book_edition}) | {status} | Borrowed by: {self.borrowed_by or "None"}'
 
     @property
     def name(self):

@@ -14,7 +14,6 @@ class Inventory:
     
     def display_books(self):
         for book in self.books:
-            borrowed = book.borrowed_by._name if book.borrowed_by else None
             print(f"{book.id} | {book}")
 
     def current_book_quantity(self):

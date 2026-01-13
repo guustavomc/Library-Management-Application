@@ -24,6 +24,7 @@ def get_book_with_id(book_id: str):
     for book in books:
         if book.id == book_id:
             return book
+    raise HTTPException(status_code=404, detail="Book not found")
 
 @app.post("/books/",response_model=BookResponse)
 def create_book(book: BookCreate):
@@ -40,6 +41,7 @@ def update_book(book_id: str, book_update: BookCreate):
             book._price = book_update.price
             book._book_edition = book_update.book_edition
             return book
+    raise HTTPException(status_code=404, detail="Book not found")
 
 @app.delete("/books/{book_id}", status_code= status.HTTP_204_NO_CONTENT)
 def delete_book(book_id: str):
@@ -47,6 +49,7 @@ def delete_book(book_id: str):
         if book.id == book_id:
             inventory.books.pop(i)
             return
+    raise HTTPException(status_code=404, detail="Book not found")
 
 @app.post("/books/{book_id}/borrow", response_model=BookResponse)
 def borrow_book (book_id: str, request: BorrowBookRequest):
