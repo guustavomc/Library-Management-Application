@@ -1,15 +1,33 @@
 from typing import Optional
 from .book import Book
 
+import json
+import os
+
 class Inventory:
     def __init__(self):
         self.books = []
+        self.books_file = "data/books.json"
+        self.load_books()
+
+    def load_books(self):
+        if os.path.exists(self.books_file):
+            with open(self.books_file, 'r') as f:
+                data = json.load(f)
+                self.books = [Book.from_dict(item) for item in data]
+        else:
+            os.makedirs(os.path.dirname(self.books_file), exist_ok=True)  # Create data/ if needed
+
+    def save_books(self):
+        with open(self.books_file, 'w') as f:
+            json.dump([book.to_dict() for book in self.books], f, indent=4)
 
     def register_book(self, name, author, pages, price, book_edition):
         new_book=Book(name, author, pages)
         new_book.price=price
         new_book.book_edition=book_edition
         self.books.append(new_book)
+        self.save_books()
         return new_book
     
     def display_books(self):
@@ -40,7 +58,7 @@ class Inventory:
         if book.is_available:
             return False
         book.return_book()
-        print(f"Book '{book._name}' was returned successfully")
+        self.save_books()
         return True
     
     def lend_book_by_id(self, book_id, customer):
@@ -51,5 +69,5 @@ class Inventory:
         if not book.is_available:
             return False
         book.borrow(customer)
-        print(f"Book '{book._name}' was lended to '{customer}'")        
+        self.save_books()  
         return True

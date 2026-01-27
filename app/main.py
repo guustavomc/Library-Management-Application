@@ -1,15 +1,15 @@
 from fastapi import FastAPI, HTTPException, status
+from models.customers import Customers
 from models.inventory import Inventory
-from models.customer import Customer
+
+from schemas.customer import CustomerCreate, CustomerResponse
 from schemas.book import BookCreate, BookResponse, BorrowBookRequest
 from typing import List
 
 app = FastAPI(title="Library API")
 
 inventory = Inventory()
-
-inventory.register_book("LORD OF THE RINGS", "J R R TOLKIEN", 1000, 50,1)
-inventory.register_book("THE HOBBIT", "J R R TOLKIEN", 600, 30, 2)
+customers = Customers()
 
 @app.get("/books/", response_model=List[BookResponse])
 def get_books(available: bool = None):
@@ -40,6 +40,7 @@ def update_book(book_id: str, book_update: BookCreate):
             book._pages = book_update.pages
             book._price = book_update.price
             book._book_edition = book_update.book_edition
+            inventory.save_books()
             return book
     raise HTTPException(status_code=404, detail="Book not found")
 
@@ -48,17 +49,16 @@ def delete_book(book_id: str):
     for i, book in enumerate(inventory.books):
         if book.id == book_id:
             inventory.books.pop(i)
+            inventory.save_books()
             return
     raise HTTPException(status_code=404, detail="Book not found")
 
 @app.post("/books/{book_id}/borrow", response_model=BookResponse)
 def borrow_book (book_id: str, request: BorrowBookRequest):
-    customer = Customer(request.customer_name, request.customer_id)
+    customer = customers.get_customer_by_id(request.customer_id)
     if inventory.lend_book_by_id(book_id, customer):
         book=inventory.get_book_by_id(book_id)
         return book
-
-    book = inventory.get_book_by_id(book_id)
     if not book:
         raise HTTPException(status_code=404, detail="Book not found")
     if not book.is_available:
@@ -76,3 +76,19 @@ def return_book(book_id:str):
         raise HTTPException(status_code=404, detail="Book not found")
     if book.is_available:
         raise HTTPException(status_code=400, detail="Book was not borrowed / already available")
+    
+@app.post("/customers/", response_model= CustomerResponse)
+def create_customer(customer: CustomerCreate):
+    newCustomer = customers.register_customer(customer.name)
+    return newCustomer
+
+@app.get("/customers/", response_model=List[CustomerResponse])
+def get_customers():
+    return customers.get_all_customers()
+
+@app.get("/customers/{customer_id}", response_model=CustomerResponse)
+def get_customer(customer_id: str):
+    customer = customers.get_customer_by_id(customer_id)
+    if not customer:
+        raise HTTPException(status_code=404, detail="Customer not found")
+    return customer

@@ -62,7 +62,7 @@ class Book:
         self.borrowed_by = None
         return True
     
-    def to_dict(cls):
+    def to_dict(self):
         return {
             "id": self.id,
             "name": self._name,
@@ -70,8 +70,8 @@ class Book:
             "pages": self._pages,
             "price": self._price,
             "book_edition": self._book_edition,
-            "is_available": self._is_available,
-            "borrowed_by": self._borrowed_by
+            "is_available": self.is_available,
+            "borrowed_by": self.borrowed_by
         }
     
     @classmethod
