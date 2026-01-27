@@ -1,5 +1,7 @@
 from typing import Optional
 from .customer import Customer
+from pathlib import Path
+
 
 import json
 import os
@@ -8,7 +10,8 @@ import os
 class Customers:
     def __init__(self):
         self.customers = []
-        self.customers_file = "data/customers.json"
+        BASE_DIR = Path(__file__).resolve().parent.parent.parent  # project root
+        self.customers_file = BASE_DIR / "data" / "customers.json"
         self.load_customers()
 
     def load_customers(self):

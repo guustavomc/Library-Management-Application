@@ -1,0 +1,12 @@
+[
+    {
+        "id": "5e0bac82",
+        "name": "Harry Potter And The Deathly Hallows",
+        "author": "J K Rowling",
+        "pages": 700,
+        "price": 100.0,
+        "book_edition": 1,
+        "is_available": true,
+        "borrowed_by": null
+    }
+]

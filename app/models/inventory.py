@@ -1,5 +1,6 @@
 from typing import Optional
 from .book import Book
+from pathlib import Path
 
 import json
 import os
@@ -7,7 +8,8 @@ import os
 class Inventory:
     def __init__(self):
         self.books = []
-        self.books_file = "data/books.json"
+        BASE_DIR = Path(__file__).resolve().parent.parent.parent  # project root
+        self.books_file = BASE_DIR / "data" / "books.json"
         self.load_books()
 
     def load_books(self):
