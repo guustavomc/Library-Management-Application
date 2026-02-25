@@ -1,5 +1,5 @@
 from fastapi import FastAPI, HTTPException, status
-from models.customers import Customers
+from models.customerBase import CustomerBase
 from models.inventory import Inventory
 
 from schemas.customer import CustomerCreate, CustomerResponse
@@ -9,7 +9,7 @@ from typing import List
 app = FastAPI(title="Library API")
 
 inventory = Inventory()
-customers = Customers()
+customers = CustomerBase()
 
 @app.get("/books/", response_model=List[BookResponse])
 def get_books(available: bool = None):

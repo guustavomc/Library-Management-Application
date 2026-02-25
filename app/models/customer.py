@@ -4,9 +4,9 @@ import uuid
 
 class Customer:
 
-    def __init__(self, name):
+    def __init__(self, name: str, customer_id: str | None = None):
         self._name = name
-        self._customer_id = self.generate_id()  # Auto-generate if not provided
+        self._customer_id = customer_id if customer_id else self.generate_id()  # Auto-generate if not provided
 
     def __str__(self):
         return f'Customer ID: {self._customer_id} | Name: {self._name}'
@@ -30,4 +30,4 @@ class Customer:
     
     @classmethod
     def from_dict(cls, data):
-        return cls(data["name"], data["customer_id"])
+        return cls(name=data["name"], customer_id=data["customer_id"])

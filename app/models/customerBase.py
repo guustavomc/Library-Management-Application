@@ -7,7 +7,7 @@ import json
 import os
 
 
-class Customers:
+class CustomerBase:
     def __init__(self):
         self.customers = []
         BASE_DIR = Path(__file__).resolve().parent.parent.parent  # project root
