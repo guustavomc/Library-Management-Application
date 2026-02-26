@@ -22,5 +22,5 @@ class BookResponse(BookBase):
  
 
 class BorrowBookRequest(BaseModel):
-    customer_name: str
-    customer_id: int
+    name: str
+    customer_id: str
