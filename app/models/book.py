@@ -11,13 +11,6 @@ class Book:
         self.is_available=True
         self.borrowed_by=None
 
-    def __str__(self):
-        status=""
-        if(self.is_available):
-            status="Available"
-        else:
-            status="Not Available"
-        return f'{self._name} by {self._author} ({self._pages} pages, ${self._price}, Edition {self._book_edition}) | {status} | Borrowed by: {self.borrowed_by or "None"}'
 
     @property
     def name(self):
