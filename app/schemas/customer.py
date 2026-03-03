@@ -1,5 +1,5 @@
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 class CustomerCreate(BaseModel):
@@ -8,3 +8,4 @@ class CustomerCreate(BaseModel):
 class CustomerResponse(BaseModel):
     customer_id:str
     name: str
+    model_config = ConfigDict(from_attributes=True)
