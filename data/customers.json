@@ -6,5 +6,9 @@
     {
         "customer_id": "a03be7a8",
         "name": "Cliente 2"
+    },
+    {
+        "customer_id": "c9197095",
+        "name": "Cliente 3"
     }
 ]

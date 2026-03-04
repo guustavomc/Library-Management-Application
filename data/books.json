@@ -8,5 +8,15 @@
         "book_edition": 1,
         "is_available": true,
         "borrowed_by": null
+    },
+    {
+        "id": "0d53e6f3",
+        "name": "The Fellowship Of The Ring",
+        "author": "J R R Tolkien",
+        "pages": 448,
+        "price": 250.0,
+        "book_edition": 1,
+        "is_available": true,
+        "borrowed_by": null
     }
 ]
