@@ -5,7 +5,7 @@ import uuid
 class Customer:
 
     def __init__(self, name: str, customer_id: str | None = None):
-        self._name = name
+        self._name = name.title()
         self._customer_id = customer_id if customer_id else self.generate_id()  # Auto-generate if not provided
 
     def __str__(self):
