@@ -109,6 +109,9 @@ pytest tests/test_book.py -v
 
 # Stop at the first failure
 pytest tests/ -x
+
+# Run Tests with coverate
+pytest --cov
 ```
 
 ### Test structure
