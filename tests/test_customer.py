@@ -25,3 +25,20 @@ def test_two_customers_have_different_ids():
     customer_1 = Customer("Test 1")
     customer_2 = Customer("Test 2")
     assert customer_1.customer_id !=customer_2.customer_id
+
+def test_to_dict_contains_expected_key(customer_with_id):
+    data = customer_with_id.to_dict()
+    assert set(data.keys())== {"customer_id", "name"}
+
+def test_to_dict_contains_correct_values(customer_with_id):
+    data = customer_with_id.to_dict()
+    assert data["customer_id"] == "fixed-1"
+    assert data["name"] == "Customer 2"
+
+def test_from_dict_has_correct_value(customer_with_id):
+    data = customer_with_id.to_dict()
+
+    recreated_data = Customer.from_dict(data)
+
+    assert recreated_data.customer_id == customer_with_id.customer_id
+    assert recreated_data.name == customer_with_id.name
