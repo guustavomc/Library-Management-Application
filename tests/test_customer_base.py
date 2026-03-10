@@ -8,8 +8,6 @@ from models.customer import Customer
 def customerBase(tmp_path, monkeypatch):
     fake_customer_file = tmp_path/"customers.json"
 
-    original_init = CustomerBase.__init__
-
     def patched_init(self):
         self.customers = []
         self.customers_file = fake_customer_file
@@ -47,3 +45,22 @@ def test_get_customer_by_id(customerBase):
 def test_get_customer_by_id_customer_unknown(customerBase):
     data = customerBase.get_customer_by_id("Test")
     assert data is None
+
+def test_get_all_customers(customerBase):
+    customer = customerBase.register_customer("Test Customer 1")
+    customer = customerBase.register_customer("Test Customer 2")
+
+    assert len(customerBase.get_all_customers()) == 2
+
+def test_load_customers_reads_saved_data(customerBase):
+    customer = customerBase.register_customer("Test Customer 1")
+
+    customerBase2 = CustomerBase.__new__(CustomerBase)
+    customerBase2.customers = []
+    customerBase2.customers_file = customerBase.customers_file
+    customerBase2.load_customers()
+
+    assert len(customerBase2.customers) == 1
+    assert customerBase2.customers[0].name == "Test Customer 1"
+    assert customerBase2.customers[0].customer_id == customer.customer_id
+
