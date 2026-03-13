@@ -18,5 +18,45 @@
         "book_edition": 1,
         "is_available": true,
         "borrowed_by": null
+    },
+    {
+        "id": "0bd79c0f",
+        "name": "Dune",
+        "author": "Frank Herbert",
+        "pages": 412,
+        "price": 19.99,
+        "book_edition": 1,
+        "is_available": true,
+        "borrowed_by": null
+    },
+    {
+        "id": "1d4e46bb",
+        "name": "Dune",
+        "author": "Frank Herbert",
+        "pages": 412,
+        "price": 19.99,
+        "book_edition": 1,
+        "is_available": true,
+        "borrowed_by": null
+    },
+    {
+        "id": "ea7ac4ab",
+        "name": "Dune",
+        "author": "Frank Herbert",
+        "pages": 412,
+        "price": 19.99,
+        "book_edition": 1,
+        "is_available": true,
+        "borrowed_by": null
+    },
+    {
+        "id": "024979f2",
+        "name": "Dune",
+        "author": "Frank Herbert",
+        "pages": 412,
+        "price": 19.99,
+        "book_edition": 1,
+        "is_available": true,
+        "borrowed_by": null
     }
 ]
