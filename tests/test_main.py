@@ -91,3 +91,12 @@ def test_delete_book_removes_from_book_list(client):
     response = client.get("/books/")
     assert response.status_code == 200
     assert len(response.json()) == 0
+
+# POST /books/{book_id}/borrow
+
+def test_borrow_book_returns_book(client):
+    book = client.post("/books/", json={"name": "Dune", "author": "Frank Herbert", "pages": 412, "price": 19.99, "book_edition": 1}).json()
+    customer = client.post("/customers/", json={"name": "Alice"}).json()
+    response = client.post(f"/books/{book['id']}/borrow", json={"customer_id": customer["customer_id"]})
+    assert response.status_code == 200
+    assert response.json()["is_available"] == False
